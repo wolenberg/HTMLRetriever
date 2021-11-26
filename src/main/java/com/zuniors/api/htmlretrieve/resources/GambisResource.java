@@ -41,13 +41,14 @@ public class GambisResource {
   }
 
   @GetMapping("/viewText")
-  public String viewText(@RequestParam(name = "i", defaultValue = "1", required = false) int i) throws IOException {
+  public String viewText(@RequestParam(name = "i", defaultValue = "0", required = false) String i) throws IOException {
     List<File> files = gambisService.getFilesFolder();
-    File file = files.get(i - 1);
+    int index = Integer.parseInt(i);
+    File file = files.get(index);
     Path fileName = file.toPath();
     return Files.readString(fileName);
   }
-
+  
   @GetMapping("/download")
   public void download(HttpServletResponse response) throws IOException {
     ZipArchiveOutputStream zipArchiveOutputStream = null;
